@@ -2,19 +2,23 @@
 
 echo "Welcome to coin Simulator"
 IS_HEADS=1
-read -p "Enter the number of times to flip the coin :" repeatation
 headsCount=0
 tailsCount=0
-for ((counter=1;counter<=repeatation;counter++))
+while [[ $headsCount -lt 21 && $tailsCount -lt 21 ]]
 do
-randomCoinFlip=$((RANDOM%2))
-if [ $randomCoinFlip -eq $IS_HEADS ]
-then
-	((headsCount++))
-else
-	((tailsCount++))
-fi
+	randomCoinFlip=$((RANDOM%2))
+	if [ $randomCoinFlip -eq $IS_HEADS ]
+	then
+		((headsCount++))
+	else
+		((tailsCount++))
+	fi
 done
-echo "Number of heads : $headsCount"
-echo "Number of tails : $tailsCount"
-
+if [ $headsCount -lt $tailsCount ]
+then
+	differenceCount=$((tailsCount-headsCount))
+	echo "Tails win by margin of :$differenceCount"
+else
+	differenceCount=$((headsCount-tailsCount))
+	echo "Heads Win by margin of :$differenceCount"
+fi

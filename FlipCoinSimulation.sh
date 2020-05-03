@@ -14,11 +14,37 @@ do
 		((tailsCount++))
 	fi
 done
-if [ $headsCount -lt $tailsCount ]
+if [ $headsCount -eq $tailsCount ]
 then
-	differenceCount=$((tailsCount-headsCount))
-	echo "Tails win by margin of :$differenceCount"
+	differenceCount=0
+	while [[ $differenceCount -lt 2 ]]
+	do
+		randomCoinFlip=$((RANDOM%2))
+		if [ $randomCoinFlip -eq $IS_HEADS ]
+		then
+			((headsCount++))
+		else
+			((tailsCount++))
+		fi
+
+		if [ $headsCount -lt $tailsCount ]
+		then
+			differenceCount=$((tailsCount-headsCount))
+
+		else
+			differenceCount=$((headsCount-tailsCount))
+
+		fi
+
+	done
 else
-	differenceCount=$((headsCount-tailsCount))
-	echo "Heads Win by margin of :$differenceCount"
+
+	if [ $headsCount -lt $tailsCount ]
+	then
+		differenceCount=$((tailsCount-headsCount))
+		echo "Tails win by margin of :$differenceCount"
+	else
+		differenceCount=$((headsCount-tailsCount))
+		echo "Heads Win by margin of :$differenceCount"
+	fi
 fi
